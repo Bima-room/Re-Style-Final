@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalog styling</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header id="navbar-component" class="navbar"></header>
+
+    <!-- ================= MENU NAVIGASI LOKAL ================= -->
+    <div class="katalog-nav">
+      <a href="#seksi-filter" class="btn-subnav">Fitur Filter Pintar</a>
+      <a href="#kategori-warna" class="btn-subnav">Inspirasi Warna</a>
+      <a href="#kategori-baju" class="btn-subnav">Padu Padan Baju</a>
+    </div>
+
+    <hr class="separator" />
+
+    <main class="main-katalog">
+      <section id="seksi-filter" class="section-filter">
+        <div class="filter-box">
+          <h2 class="filter-title">Interactive Style Filter</h2>
+          <p class="filter-subtitle">
+            Pilih pakaian lama yang ada di lemarimu untuk melihat rekomendasi
+            padu padan instan!
+          </p>
+
+          <div id="filter-error-msg" class="filter-error-banner d-none"></div>
+
+          <div class="filter-group-container">
+            <div class="filter-group">
+              <label for="filter-tipe">Tipe Pakaian</label>
+              <select id="filter-tipe">
+                <option value="semua">-- Pilih Tipe --</option>
+                <option value="sweater">Sweater</option>
+                <option value="kemeja">Kemeja</option>
+                <option value="kaos">Kaos Polos</option>
+                <option value="jaket_denim">Jaket Denim</option>
+                <option value="hoodie">Hoodie</option>
+                <option value="blus">Blus (Blouse)</option>
+                <option value="cardigan">Cardigan</option>
+                <option value="blazer">Blazer</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-warna">Palet Warna</label>
+
+              <div class="select-wrapper">
+                <select
+                  id="filter-warna"
+                  onfocus="this.size=8;"
+                  onblur="this.size=1;"
+                  onchange="this.size=1; this.blur();"
+                >
+                  <option value="semua">-- Pilih Warna --</option>
+
+                  <optgroup label="🌿 Earth Tone & Neutral">
+                    <option value="navy">Biru Tua (Navy)</option>
+                    <option value="krem">Beige (Krem)</option>
+                    <option value="cokelat">Cokelat (Brown)</option>
+                    <option value="olive">Olive Green</option>
+                    <option value="hitam">Hitam</option>
+                    <option value="abu">Abu-abu</option>
+                  </optgroup>
+
+                  <optgroup label="🌸 Soft Pastel Tone">
+                    <option value="kuning_pastel">Kuning Pastel</option>
+                    <option value="dusty_pink">Dusty Pink</option>
+                    <option value="lilac">Lilac (Ungu Muda)</option>
+                    <option value="mint">Mint Green</option>
+                  </optgroup>
+
+                  <optgroup label="🔥 Bold & Bright">
+                    <option value="terracotta">Terracotta (Bata)</option>
+                    <option value="burgundy">Burgundy (Marun)</option>
+                    <option value="mustard">Mustard Yellow</option>
+                    <option value="emerald">Emerald Green</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-bahan">Bahan Kain</label>
+              <select id="filter-bahan">
+                <option value="semua">-- Pilih Bahan --</option>
+                <option value="katun">Katun</option>
+                <option value="wool">Wool / Rajut</option>
+                <option value="denim">Denim</option>
+                <option value="fleece">Fleece / Baby Terry</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="btn-proses-filter" class="btn-filter-aksi">
+            Automated Cross-Matching
+          </button>
+        </div>
+
+        <div id="hasil-rekomendasi" class="hasil-filter-container d-none">
+          <h3 class="rekomendasi-title">✨ Hasil Rekomendasi Gaya Untukmu:</h3>
+          <div class="rekomendasi-card-result">
+            <div class="rekomendasi-img-box">
+              <img
+                id="rekomendasi-gambar-img"
+                src=""
+                alt="Rekomendasi Gaya"
+                class="filter-result-img"
+              />
+            </div>
+            <div class="rekomendasi-info">
+              <h4 id="rekomendasi-nama-baju">Nama Pakaian</h4>
+
+              <div class="result-detail-item warna-result-row">
+                <span class="detail-label">Warna Pakaianmu:</span>
+                <div
+                  id="filter-warna-terpilih-bullet"
+                  class="color-bullet-mini"
+                ></div>
+                <span id="filter-warna-terpilih-nama" class="detail-value-text"
+                  >-</span
+                >
+              </div>
+
+              <div class="result-detail-item">
+                <span class="detail-label">Rekomendasi Pasangan Warna:</span>
+                <div
+                  id="rekomendasi-warna-badges"
+                  class="palette-badges-inline"
+                ></div>
+              </div>
+
+              <div class="result-detail-item">
+                <span class="detail-label">Kombinasi Bawahan:</span>
+                <span id="rekomendasi-bawahan" class="detail-value">-</span>
+              </div>
+              <div class="result-detail-item">
+                <span class="detail-label">Aksesoris Pendukung:</span>
+                <span id="rekomendasi-aksesoris" class="detail-value">-</span>
+              </div>
+              <p class="card-desc" id="rekomendasi-teks-panduan">
+                Panduan gaya...
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="separator" />
+
+      <section id="kategori-warna" class="section-katalog">
+        <h2 class="section-title">Inspirasi Palet Warna</h2>
+        <p class="section-subtitle">
+          Pilih warna pakaian lamamu berdasarkan kategorinya dan temukan
+          kombinasi terbaiknya!
+        </p>
+
+        <div class="sub-kategori-container">
+          <h3 class="sub-kategori-title">1. Earth Tone & Neutral</h3>
+          <div class="grid-katalog">
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Biru Tua (Navy)', '#0a2273', ['#aeb1b6', '#ffffff', '#ffe4c4', '#1c1c1c', '#f5ebe0', '#7b1818'], ['Abu-abu', 'Putih', 'Krem', 'Hitam', 'Milk', 'Burgundy'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #0a2273"
+              ></div>
+              <div class="card-body">
+                <h3>Biru Tua (Navy)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #aeb1b6; color: #111"
+                    >Abu-abu</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #ffe4c4; color: #111"
+                    >Krem</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 6 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Beige (Krem)', '#decfa7', ['#1c1c1c', '#464640', '#faf6ee', '#7d6b58'], ['Hitam', 'Olive', 'Putih Telur', 'Cokelat Kayu'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #decfa7"
+              ></div>
+              <div class="card-body">
+                <h3>Beige (Krem)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #1c1c1c; color: #fff"
+                    >Hitam</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #7d6b58; color: #fff"
+                    >Cokelat</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 4 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Cokelat (Brown)', '#3b2a26', ['#faf6ee', '#f1b3cf', '#decfa7', '#581825', '#aeb1b6', '#87aedb', '#1c1c1c', '#7d8758'], ['Milk', 'Pink', 'Beige', 'Burgundy', 'Abu-abu', 'Biru Muda', 'Hitam', 'Olive'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #3b2a26"
+              ></div>
+              <div class="card-body">
+                <h3>Cokelat (Brown)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #f1b3cf; color: #111"
+                    >Pink</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #7d8758; color: #fff"
+                    >Olive</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 8 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Olive Green', '#4b5338', ['#ffffff', '#decfa7', '#3b2a26', '#1c1c1c', '#f5f5f5'], ['Putih', 'Beige', 'Cokelat Tua', 'Hitam', 'Light Grey'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #4b5338"
+              ></div>
+              <div class="card-body">
+                <h3>Olive Green</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #decfa7; color: #111"
+                    >Beige</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-kategori-container">
+          <h3 class="sub-kategori-title">2. Soft Pastel Tone</h3>
+          <div class="grid-katalog">
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Kuning Pastel', '#f9e5b9', ['#cbd5d5', '#0a2273', '#f4f5fa', '#3b2a26', '#344966'], ['Mint Soft', 'Navy', 'Putih', 'Cokelat Tua', 'Steel Blue'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #f9e5b9"
+              ></div>
+              <div class="card-body">
+                <h3>Kuning Pastel</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #cbd5d5; color: #111"
+                    >Mint</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #0a2273; color: #fff"
+                    >Navy</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Dusty Pink', '#e1b3b3', ['#ffffff', '#aeb1b6', '#0a2273', '#decfa7', '#1c1c1c'], ['Putih', 'Abu-abu', 'Navy', 'Beige', 'Hitam'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #e1b3b3"
+              ></div>
+              <div class="card-body">
+                <h3>Dusty Pink</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #aeb1b6; color: #111"
+                    >Abu-abu</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Lilac (Ungu Muda)', '#d1c4e9', ['#ffffff', '#1c1c1c', '#87aedb', '#aeb1b6', '#ffe4c4'], ['Putih', 'Hitam', 'Denim Blue', 'Abu-abu', 'Krem'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #d1c4e9"
+              ></div>
+              <div class="card-body">
+                <h3>Lilac (Ungu Muda)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #87aedb; color: #111"
+                    >Denim</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Mint Green', '#c8e6c9', ['#ffffff', '#3b2a26', '#decfa7', '#1c1c1c', '#aeb1b6'], ['Putih', 'Cokelat', 'Beige', 'Hitam', 'Abu-abu'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #c8e6c9"
+              ></div>
+              <div class="card-body">
+                <h3>Mint Green</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #3b2a26; color: #fff"
+                    >Cokelat</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-kategori-container">
+          <h3 class="sub-kategori-title">3. Bold & Bright</h3>
+          <div class="grid-katalog">
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Terracotta (Bata)', '#c45a3a', ['#1c1c1c', '#decfa7', '#ffffff', '#4b5338', '#ffe4c4'], ['Hitam', 'Beige', 'Putih', 'Olive', 'Krem'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #c45a3a"
+              ></div>
+              <div class="card-body">
+                <h3>Terracotta (Bata)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #1c1c1c; color: #fff"
+                    >Hitam</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #decfa7; color: #111"
+                    >Beige</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Burgundy (Marun)', '#6b1d2f', ['#ffffff', '#1c1c1c', '#decfa7', '#aeb1b6', '#0a2273'], ['Putih', 'Hitam', 'Beige', 'Abu-abu', 'Navy'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #6b1d2f"
+              ></div>
+              <div class="card-body">
+                <h3>Burgundy (Marun)</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #decfa7; color: #111"
+                    >Beige</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Mustard Yellow', '#e5a93b', ['#1c1c1c', '#0a2273', '#4b5338', '#ffffff', '#3b2a26'], ['Hitam', 'Navy', 'Olive', 'Putih', 'Cokelat'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #e5a93b"
+              ></div>
+              <div class="card-body">
+                <h3>Mustard Yellow</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #1c1c1c; color: #fff"
+                    >Hitam</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #0a2273; color: #fff"
+                    >Navy</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-katalog"
+              onclick="bukaModal('Emerald Green', '#046340', ['#ffffff', '#decfa7', '#1c1c1c', '#ffe4c4', '#aeb1b6'], ['Putih', 'Beige', 'Hitam', 'Krem', 'Abu-abu'])"
+            >
+              <div
+                class="color-preview"
+                style="background-color: #046340"
+              ></div>
+              <div class="card-body">
+                <h3>Emerald Green</h3>
+                <p class="label-palette">Rekomendasi Utama:</p>
+                <div class="palette-badges">
+                  <span
+                    class="badge"
+                    style="background-color: #ffffff; color: #111"
+                    >Putih</span
+                  >
+                  <span
+                    class="badge"
+                    style="background-color: #decfa7; color: #111"
+                    >Beige</span
+                  >
+                </div>
+                <p class="card-desc">
+                  Klik kartu untuk melihat semua 5 kombinasi warna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div
+        id="modalPalet"
+        class="modal-overlay"
+        onclick="tutupModalLuar(event)"
+      >
+        <div class="modal-content">
+          <span class="btn-close-modal" onclick="tutupModal()">&times;</span>
+          <h2 id="modalTitle">Nama Warna</h2>
+          <div class="modal-body-layout">
+            <div class="warna-utama-box">
+              <div id="visualWarnaUtama" class="lingkaran-warna-besar"></div>
+              <p>Warna Dasar Pakaianmu</p>
+            </div>
+            <div class="warna-kombinasi-box">
+              <h3>Semua Palet Kombinasi yang Cocok:</h3>
+              <div id="listKombinasiLengkap" class="modal-grid-badges"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="kategori-baju" class="section-katalog">
+        <h2 class="section-title">Padu Padan Jenis Baju</h2>
+        <p class="section-subtitle">
+          Punya baju-baju ini di lemari? Jangan dibuang, coba padukan seperti
+          ini!
+        </p>
+
+        <div class="grid-katalog">
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Sweater', 'assets/sweater-combo.png', 'Gaya layering dengan membiarkan kerah kemeja putih mengintip keluar dari sweater akan membuat tampilan lamamu jadi super modis!', 'Kemeja Putih (Dalaman)', 'Loose Pants / Jeans', 'Sneakers Putih', 'Tote Bag / Jam Tangan')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/sweater-combo.png"
+                alt="Kombinasi Sweater"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>1. Sweater</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Loose Pants / Jeans</li>
+                <li>White Longsleeve Shirt</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Kemeja (Shirt)', 'assets/kemeja-combo.png', 'Kemeja bisa dijadikan outer (luaran) yang santai atau dikancing rapi untuk kesan semi-formal yang bersih.', 'Kaos Polos (Hitam/Putih)', 'Chino Pants / Cargo Pants', 'Sepatu Loafers / Casual Sneakers', 'Kacamata Hitam / Sling Bag')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/kemeja-combo.png"
+                alt="Kombinasi Kemeja"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>2. Kemeja</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Polos & Chino Pants</li>
+                <li>Cargo Pants</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Denim Jacket', 'assets/denim-combo.png', 'Jaket denim tidak pernah salah untuk gaya kasual tangguh. Cocok dikombinasikan dengan warna kontras di dalamnya.', 'Hoodie atau Kaos Hitam', 'Black Slim-fit Jeans / Cargo', 'Sepatu Boots / High Sneakers', 'Topi Beanie / Jam Tangan Sporty')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/denim-combo.png"
+                alt="Kombinasi Denim Jacket"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>3. Denim Jacket</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Hoodie / Kaos Hitam</li>
+                <li>Black Slim-fit Jeans</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Kaos (T-Shirt)', 'assets/kaos-combo.png', 'Kaos lamamu bisa terlihat berkelas dengan teknik tuck-in (dimasukkan ke celana) atau dipadukan dengan celana bertekstur.', 'Tidak ada (Dalaman basic)', 'Ankle Pants / Denim Shorts', 'Sandals Aesthetic / Slip-on', 'Kalung Rantai Tipis / Bucket Hat')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/kaos-combo.png"
+                alt="Kombinasi Kaos"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>4. Kaos (T-Shirt)</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Ankle Pants</li>
+                <li>Aksesori Minimalis</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Blus (Blouse)', 'assets/blus-combo.png', 'Blus berbahan ringan sangat cocok untuk gaya smart-casual maupun formal. Paduan celana berpotongan rapi atau rok akan memberikan siluet tubuh yang jenjang dan anggun.', 'Tanktop / Kamisol (Opsi luar)', 'Culotte Pants / Rok Plisket', 'Flat Shoes / Mules ', 'Kalung Layer Minimalis / Shoulder Bag')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/blus-combo.png"
+                alt="Kombinasi Blus"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>5. Blus (Blouse)</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Culotte Pants / Rok Plisket</li>
+                <li>Flat Shoes / Mules</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Hoodie', 'assets/hoodie-combo.png', 'Gaya streetwear yang sangat nyaman. Sempurna untuk aktivitas santai sehari-hari atau saat cuaca dingin.', 'Tidak ada (Outerwear utama)', 'Sweatpants / Baggy Jeans', 'Running Sneakers / Chunky Shoes', 'Cap (Topi Bisbol) / Backpack')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/hoodie-combo.png"
+                alt="Kombinasi Hoodie"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>6. Hoodie</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Sweatpants / Baggy Jeans</li>
+                <li>Sneakers</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Cardigan', 'assets/cardigan-combo.png', 'Cardigan rajut sangat fleksibel untuk gaya santai maupun semi-formal. Menggunakan dalaman kontras membuat tekstur rajutnya terlihat lebih menonjol dan modis.', 'Kaos Polos / Tanktop', 'High-waist Jeans / Kulot', 'Loafers / Casual Sneakers', 'Sling Bag Canvas / Kalung Minimalis')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/cardigan-combo.png"
+                alt="Kombinasi Cardigan"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>7. Cardigan</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Polos & High-waist Jeans</li>
+                <li>Loafers / Sneakers</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Blazer', 'assets/blazer-combo.png', 'Blazer tidak selalu kaku untuk ke kantor! Dengan paduan yang kasual, blazer lamamu bisa diubah menjadi gaya ala Korea atau smart-streetwear yang sangat santai, trendi, dan tetap terlihat berkelas.', 'Kaos Polos (Hitam/Putih) / Crop Top', 'Loose Jeans / Celana Kulot / Ankle Pants', 'Casual Sneakers / Sepatu Canvas / Mules', 'Tote Bag Canvas / Kalung Rantai Tipis')"
+          >
+            <div class="image-preview">
+              <img
+                src="assets/blazer-combo.png"
+                alt="Kombinasi Blazer"
+                class="katalog-img"
+              />
+            </div>
+            <div class="card-body">
+              <h3>8. Blazer</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Polos & Loose Jeans</li>
+                <li>Casual Sneakers</li>
+              </ul>
+              <p class="card-desc">
+                Klik kartu untuk melihat detail lengkap paduan celana &
+                aksesori.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div
+        id="modalBaju"
+        class="modal-overlay"
+        onclick="tutupModalBajuLuar(event)"
+      >
+        <div class="modal-content modal-baju-lebar">
+          <span class="btn-close-modal" onclick="tutupModalBaju()"
+            >&times;</span
+          >
+          <h2 id="modalBajuTitle">Nama Baju</h2>
+          <div class="modal-body-layout">
+            <div class="baju-img-box-modal">
+              <img id="modalBajuImg" src="" alt="Preview Kombinasi" />
+            </div>
+            <div class="baju-detail-box-modal">
+              <p id="modalBajuDesc" class="modal-baju-text-desc">
+                Deskripsi panduan gaya baju...
+              </p>
+
+              <div class="komponen-breakdown">
+                <div class="komponen-item">
+                  <strong>Atasan/Layering:</strong>
+                  <span id="compAtasan">-</span>
+                </div>
+                <div class="komponen-item">
+                  <strong>Bawahan (Celana):</strong>
+                  <span id="compBawahan">-</span>
+                </div>
+                <div class="komponen-item">
+                  <strong>Alas Kaki (Sepatu):</strong>
+                  <span id="compAlasKaki">-</span>
+                </div>
+                <div class="komponen-item">
+                  <strong>Aksesori Pendukung:</strong>
+                  <span id="compAksesori">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer-component" class="footer"></footer>
+    <script src="component-loader.js"></script>
+    <script src="filter-logic.js"></script>
+  </body>
+</html>
