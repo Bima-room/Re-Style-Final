@@ -63,7 +63,7 @@
                 >
                   <option value="semua">-- Pilih Warna --</option>
 
-                  <optgroup label="🌿 Earth Tone & Neutral">
+                  <optgroup label="Earth Tone & Neutral">
                     <option value="navy">Biru Tua (Navy)</option>
                     <option value="krem">Beige (Krem)</option>
                     <option value="cokelat">Cokelat (Brown)</option>
@@ -72,14 +72,14 @@
                     <option value="abu">Abu-abu</option>
                   </optgroup>
 
-                  <optgroup label="🌸 Soft Pastel Tone">
+                  <optgroup label="Soft Pastel Tone">
                     <option value="kuning_pastel">Kuning Pastel</option>
                     <option value="dusty_pink">Dusty Pink</option>
                     <option value="lilac">Lilac (Ungu Muda)</option>
                     <option value="mint">Mint Green</option>
                   </optgroup>
 
-                  <optgroup label="🔥 Bold & Bright">
+                  <optgroup label="Bold & Bright">
                     <option value="terracotta">Terracotta (Bata)</option>
                     <option value="burgundy">Burgundy (Marun)</option>
                     <option value="mustard">Mustard Yellow</option>
@@ -99,6 +99,28 @@
                 <option value="fleece">Fleece / Baby Terry</option>
               </select>
             </div>
+
+            <!-- Ganti bagian select tipe pakaian -->
+             <div class="filter-group">
+              <label for="filter-celana">Celana</label>
+              <select id="filter-celana">
+                <option value="semua">-- Pilih Tipe --</option>
+                <optgroup label="Tipe Celana Kasual">
+                  <option value="baggy_grey">Celana Baggy Abu-abu</option>
+                  <option value="jeans_blue">Jeans Biru Klasik</option>
+                  <option value="jeans_black">Jeans Hitam Longgar</option>
+                  <option value="jeans_sobek">Jeans Sobek (Ripped)</option>
+                </optgroup>
+                <optgroup label="Tipe Cargo & Fungsional">
+                  <option value="cargo_white">Cargo Putih Clean</option>
+                  <option value="cargo_green">Cargo Hijau Army</option>
+                </optgroup>
+                <optgroup label="Tipe Smart Casual">
+                  <option value="kain_beige">Celana Kain Krem (Beige)</option>
+                  <option value="slacks_grey">Celana Bahan Abu-abu</option>
+                </optgroup>
+              </select>
+              </div>
           </div>
 
           <button id="btn-proses-filter" class="btn-filter-aksi">
@@ -107,15 +129,16 @@
         </div>
 
         <div id="hasil-rekomendasi" class="hasil-filter-container d-none">
-          <h3 class="rekomendasi-title">✨ Hasil Rekomendasi Gaya Untukmu:</h3>
+          <h3 class="rekomendasi-title">Hasil Rekomendasi Gaya Untukmu:</h3>
           <div class="rekomendasi-card-result">
-            <div class="rekomendasi-img-box">
-              <img
-                id="rekomendasi-gambar-img"
-                src=""
-                alt="Rekomendasi Gaya"
-                class="filter-result-img"
-              />
+            <div class="img-half">
+              <span class="img-label">Atasan</span>
+              <img id="rekomendasi-atasan-img" src="" alt="Rekomendasi Atasan" />
+            </div>
+            <!-- Kolom Gambar Celana -->
+            <div class="img-half">
+              <span class="img-label">Bawahan</span>
+              <img id="rekomendasi-bawahan-img" src="" alt="Celana Pilihan" />
             </div>
             <div class="rekomendasi-info">
               <h4 id="rekomendasi-nama-baju">Nama Pakaian</h4>
@@ -756,6 +779,170 @@
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ================= KATALOG CELANA BARU ================= -->
+      <section id="kategori-baju" class="section-katalog">
+        <h2 class="section-title">Padu Padan Jenis Celana</h2>
+        <p class="section-subtitle">
+          Punya celana-celana ini di lemari? Jangan dibuang, coba padukan atasan yang tepat seperti ini!
+        </p>
+
+        <div class="grid-katalog">
+          
+          <!-- Celana 1: Baggy Grey -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Baggy Abu-abu', 'assets/celana-baggy-grey.png', 'Potongan celana baggy yang longgar dengan warna abu-abu netral memberikan kesan santai namun tetap trendi. Sangat cocok untuk gaya streetwear sehari-hari.', 'Kaos Oversized / Crop Top', 'Celana Baggy Abu-abu (Grey Baggy Jeans)', 'Sneakers Chunky / Sepatu Kanvas', 'Topi Beanie / Ransel')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-baggy-grey.png" alt="Celana Baggy Grey" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>1. Baggy Jeans Grey</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Oversized Putih</li>
+                <li>Crop Top Hitam</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 2: Cargo White -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Cargo Putih', 'assets/celana-cargo-white.png', 'Celana cargo putih memberikan kesan streetwear yang bersih (clean look). Banyaknya kantong menambah fungsi praktis, cocok dipadukan dengan atasan bertekstur atau berwarna kontras.', 'Sweater Rajut Gelap / Kemeja Denim', 'Celana Cargo Putih (White Cargo Pants)', 'Boots Kulit / High-top Sneakers', 'Sling Bag Utilitas / Jam Tangan Sporty')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-cargo-white.png" alt="Celana Cargo White" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>2. Cargo Pants White</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Sweater Rajut Gelap</li>
+                <li>Kemeja Denim Biru Terang</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 3: Jeans Light Blue -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Jeans Biru Terang Klasik', 'assets/celana-jeans-light-blue.png', 'Barang wajib (staple item) yang tak lekang oleh waktu. Jeans biru terang sangat serbaguna untuk gaya kasual santai. Paling aman dipadukan dengan warna netral seperti putih atau krem.', 'Kaos Putih Polos / Blus Floral', 'Celana Jeans Biru Terang (Light Blue Jeans)', 'Sneakers Putih Bersih / Sandal Tali', 'Kacamata Hitam / Tote Bag Kanvas')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-jeans-light-blue.png" alt="Celana Jeans Light Blue" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>3. Light Blue Jeans</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Putih Polos</li>
+                <li>Blus Floral Lembut</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 4: Kain Beige -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Kain Krem (Beige)', 'assets/celana-kain-beige.png', 'Celana bahan dengan warna krem (earth tone) memancarkan aura smart-casual dan preppy. Potongannya yang rapi membuatnya cocok untuk kuliah maupun acara semi-formal.', 'Kemeja Katun Navy / Cardigan Rajut Cokelat', 'Celana Kain Krem (Beige Trousers)', 'Sepatu Loafers / Mules', 'Sabuk Kulit Tipis / Jam Tangan Klasik')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-kain-beige.png" alt="Celana Kain Beige" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>4. Beige Trousers</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kemeja Navy</li>
+                <li>Cardigan Cokelat Tua</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 5: Jeans Black -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Jeans Hitam Longgar', 'assets/celana-jeans-black.png', 'Penyelamat gaya sehari-hari! Jeans hitam longgar memberikan kesan edgy yang tangguh dan menyamarkan bentuk kaki. Bebas dipadukan dengan warna seterang apapun di bagian atasan.', 'Jaket Denim / Jaket Kulit / Kaos Band', 'Celana Jeans Hitam (Black Baggy Jeans)', 'Sepatu Bot Tempur (Combat Boots) / Sneakers Hitam', 'Kalung Rantai Silver / Sabuk Logam')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-jeans-black.png" alt="Celana Jeans Black" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>5. Black Baggy Jeans</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Jaket Denim Terang</li>
+                <li>Kaos Band / Grafis Besar</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 6: Slacks Grey -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Kain Abu-abu', 'assets/celana-slacks-grey.png', 'Celana bahan berwarna abu-abu sangat identik dengan gaya kantoran atau smart-wear. Jangan takut terlihat kaku, padukan dengan atasan santai untuk menciptakan gaya modern yang seimbang.', 'Kaos Turtleneck Hitam / Kemeja Putih Lengan Pendek', 'Celana Kain Abu-abu (Grey Slacks)', 'Sepatu Pantofel Kasual / Sepatu Oxford', 'Tas Kulit Ramping / Cincin Minimalis')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-slacks-grey.png" alt="Celana Slacks Grey" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>6. Grey Slacks</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Turtleneck Hitam Polos</li>
+                <li>Kemeja Lengan Pendek</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 7: Cargo Green -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Cargo Hijau Army', 'assets/celana-cargo-green.png', 'Membawa elemen gaya militer dan petualang. Warna hijau zaitun (olive green) sangat serasi dengan kelompok warna earth-tone lainnya. Celana ini membuat penampilanmu terlihat berkarakter.', 'Kaos Abu-abu Misty / Hoodie Hitam Oversized', 'Celana Cargo Hijau Army (Olive Green Cargo)', 'Sepatu Hiking Boots / Sepatu Kanvas Tebal', 'Topi Snapback / Gelang Tali')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-cargo-green.png" alt="Celana Cargo Green" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>7. Olive Green Cargo</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kaos Abu-abu Misty</li>
+                <li>Hoodie Hitam Oversized</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
+          <!-- Celana 8: Jeans Sobek -->
+          <div
+            class="card-katalog"
+            onclick="bukaModalBaju('Celana Jeans Sobek (Ripped Jeans)', 'assets/celana-jeans-sobek.png', 'Ripped jeans memberikan sentuhan pemberontak (rebellious) dan kasual tingkat tinggi. Kunci menggunakannya agar tetap rapi adalah memadukannya dengan atasan yang tidak terlalu berantakan.', 'Kemeja Flannel / Kemeja Denim Gelap', 'Celana Jeans Sobek (Ripped Jeans)', 'Sepatu Slip-on / Sneakers Vintage', 'Sling Bag Kecil / Kacamata Transparan')"
+          >
+            <div class="image-preview">
+              <img src="assets/celana-jeans-sobek.png" alt="Celana Jeans Sobek" class="katalog-img"/>
+            </div>
+            <div class="card-body">
+              <h3>8. Ripped Jeans</h3>
+              <p class="label-palette">Kombinasi Utama:</p>
+              <ul class="combo-list">
+                <li>Kemeja Flannel Kotak-kotak</li>
+                <li>Kemeja Denim Gelap</li>
+              </ul>
+              <p class="card-desc">Klik kartu untuk detail paduan alas kaki & aksesori.</p>
+            </div>
+          </div>
+
         </div>
       </section>
 

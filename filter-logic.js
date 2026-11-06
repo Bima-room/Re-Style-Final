@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectTipe = document.getElementById("filter-tipe");
   const selectWarna = document.getElementById("filter-warna");
   const selectBahan = document.getElementById("filter-bahan");
+  const selectCelana = document.getElementById("filter-celana");
   const btnFilter = document.getElementById("btn-proses-filter");
   const hasilRekomendasiBox = document.getElementById("hasil-rekomendasi");
   const errorBanner = document.getElementById("filter-error-msg");
@@ -125,6 +126,19 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   };
 
+  // Database gambar celana ini di bawah databaseWarna
+const databaseGambarCelana = {
+  "baggy_grey": "assets/celana-baggy-grey.png",
+  "cargo_white": "assets/celana-cargo-white.png",
+  "jeans_blue": "assets/celana-jeans-light-blue.png",
+  "kain_beige": "assets/celana-kain-beige.png",
+  "jeans_black": "assets/celana-jeans-black.png",
+  "slacks_grey": "assets/celana-slacks-grey.png",
+  "cargo_green": "assets/celana-cargo-green.png",
+  "jeans_sobek": "assets/celana-jeans-sobek.png",
+  "semua": "assets/celana-jeans-black.png" // Gambar default jika user tidak milih celana spesifik
+};
+
   // --- LOGIKA UTAMA PROSES FILTER ---
   if (btnFilter) {
     btnFilter.addEventListener("click", function () {
@@ -154,6 +168,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const resAksesoris = document.getElementById("rekomendasi-aksesoris");
       const resTeks = document.getElementById("rekomendasi-teks-panduan");
       const resGambar = document.getElementById("rekomendasi-gambar-img");
+      const resGambarAtasan = document.getElementById("rekomendasi-atasan-img");
+const resGambarBawahan = document.getElementById("rekomendasi-bawahan-img");
 
       const bulletWarnaUtama = document.getElementById(
         "filter-warna-terpilih-bullet"
@@ -164,6 +180,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const containerBadgeKombinasi = document.getElementById(
         "rekomendasi-warna-badges"
       );
+
+      const celanaTerpilih = selectCelana ? selectCelana.value : "semua";
 
       // STEP A: PROSES LOGIKA WARNA (Dinami & Akurat)
       const dataWarnaAktif = databaseWarna[warna] || databaseWarna["semua"];
@@ -192,64 +210,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (tipe === "sweater") {
         resNama.innerText = `Gaya Cozy Layering (Sweater ${txtWarna})`;
-        resBawahan.innerText = `Celana berpotongan longgar berwarna ${dataWarnaAktif.matchTxt[0]} / ${dataWarnaAktif.matchTxt[1]}`;
-        resAksesoris.innerText =
-          "Sling Bag Kulit Lokal & Sepatu Sneakers Putih";
+        resAksesoris.innerText = "Sling Bag Kulit Lokal & Sepatu Sneakers Putih";
         resTeks.innerText = `Pakaian berwarna ${txtWarna} sangat bagus dipadukan dengan inner kemeja putih di dalam sweater. Keluarkan bagian kerah kemeja untuk menciptakan kesan preppy look ala mahasiswa yang berkelas.`;
-        resGambar.src = "assets/sweater-combo.png";
+        resGambarAtasan.src = "assets/sweater-combo.png";
       } else if (tipe === "kemeja") {
         resNama.innerText = `Gaya Smart Casual (Kemeja ${txtWarna})`;
-        resBawahan.innerText = `Ankle Pants berpotongan rapi warna ${dataWarnaAktif.matchTxt[0]}`;
         resAksesoris.innerText = "Jam Tangan Kulit Minimalis & Sepatu Loafers";
         resTeks.innerText = `Kemeja berwarna ${txtWarna} ini sangat ideal untuk presentasi kuliah. Biarkan kancing paling atas terbuka dan gulung lengan hingga 3/4 lengan secara rapi agar tetap kasual.`;
-        resGambar.src = "assets/kemeja-combo.png";
+        resGambarAtasan.src = "assets/kemeja-combo.png";
       } else if (tipe === "kaos") {
         resNama.innerText = `Gaya Minimalis Streetwear (Kaos ${txtWarna})`;
-        resBawahan.innerText = `High-Waist Denim Jeans / Cargo Pants warna ${dataWarnaAktif.matchTxt[0]}`;
-        resAksesoris.innerText =
-          "Topi Beanie Rajut, Totebag Kanvas, & Kalung Rantai Tipis";
+        resAksesoris.innerText = "Topi Beanie Rajut, Totebag Kanvas, & Kalung Rantai Tipis";
         resTeks.innerText = `Gaya santai sehari-hari. Selipkan bagian bawah kaos ${txtWarna} milikmu ke dalam celana (teknik tuck-in) untuk memberikan ilusi tubuh yang lebih jenjang dan rapi.`;
-        resGambar.src = "assets/kaos-combo.png";
+        resGambarAtasan.src = "assets/kaos-combo.png";
       } else if (tipe === "jaket_denim") {
         resNama.innerText = "Gaya Urban Explorer (Jaket Denim Core)";
-        resBawahan.innerText = `Slim Jeans warna ${dataWarnaAktif.matchTxt[0]} atau Chino warna ${dataWarnaAktif.matchTxt[1]}`;
         resAksesoris.innerText = "Kacamata Hitam / Jam Tangan Sporty";
         resTeks.innerText = `Menggunakan Jaket Denim dengan kombinasi dalaman berwarna ${txtWarna} memberikan kontras struktur pakaian yang tegas, maskulin, dan sangat ikonik.`;
-        resGambar.src = "assets/denim-combo.png";
+        resGambarAtasan.src = "assets/denim-combo.png";
       } else if (tipe === "hoodie") {
         resNama.innerText = `Gaya Athleisure (Oversized Hoodie ${txtWarna})`;
-        resBawahan.innerText = `Sweatpants / Loose Cargo warna ${dataWarnaAktif.matchTxt[0]}`;
         resAksesoris.innerText = "Topi Snapback & High-top Sneakers";
-        resTeks.innerText = `Mengutamakan kenyamanan maksimal. Hoodie berwarna ${txtWarna} ini sangat aman diseimbangkan dengan bawahan berwarna netral kalem untuk hangout santai malam hari.`;
-        resGambar.src = "assets/hoodie-combo.png";
+        resTeks.innerText = `Mengutamakan kenyamanan maksimal. Hoodie berwarna ${txtWarna} ini sangat aman diseimbangkan dengan celana yang nyaman untuk hangout santai malam hari.`;
+        resGambarAtasan.src = "assets/hoodie-combo.png";
       } else if (tipe === "blus") {
         resNama.innerText = `Gaya Feminin Anggun (Blouse ${txtWarna})`;
-        resBawahan.innerText = `Culotte Pants (Kulot) / Rok Plisket warna ${dataWarnaAktif.matchTxt[0]} atau ${dataWarnaAktif.matchTxt[1]}`;
         resAksesoris.innerText = "Shoulder Bag Kulit & Kalung Layer Minimalis";
-        resTeks.innerText = `Karakter kain blus warna ${txtWarna} yang jatuh memberikan siluet anggun. Paduan warna bawahan yang soft akan menonjolkan aura yang elegan dan kalem.`;
-        resGambar.src = "assets/blus-combo.png";
+        resTeks.innerText = `Karakter kain blus warna ${txtWarna} yang jatuh memberikan siluet anggun. Paduan celana yang soft akan menonjolkan aura yang elegan dan kalem.`;
+        resGambarAtasan.src = "assets/blus-combo.png";
       } else if (tipe === "cardigan") {
         resNama.innerText = `Gaya Aesthetic Warmth (Cardigan ${txtWarna})`;
-        resBawahan.innerText = `High-waist Jeans / Kulot warna ${dataWarnaAktif.matchTxt[0]}`;
         resAksesoris.innerText = "Sling Bag Canvas & Kalung Mutiara Kecil";
         resTeks.innerText = `Gunakan dalaman tanktop atau kaos polos dengan warna kontras dari rekomendasi palet di atas agar tekstur rajutan dari cardigan ${txtWarna} kamu terlihat menonjol.`;
-        resGambar.src = "assets/cardigan-combo.png";
+        resGambarAtasan.src = "assets/cardigan-combo.png";
       } else if (tipe === "blazer") {
         resNama.innerText = `Gaya Korean Smart-Streetwear (Blazer ${txtWarna})`;
-        resBawahan.innerText = `Loose Jeans Longgar / Ankle Pants warna ${dataWarnaAktif.matchTxt[0]}`;
-        resAksesoris.innerText =
-          "Tote Bag Canvas, Kacamata Frame Transparan, & Sneakers Putih";
-        resTeks.innerText = `Blzer berwarna ${txtWarna} tidak akan terlihat kaku jika bagian dalamnya dipadukan dengan kaos basic kasual serta sepatu canvas santai untuk look k-style modern.`;
-        resGambar.src = "assets/blazer-combo.png";
+        resAksesoris.innerText = "Tote Bag Canvas, Kacamata Frame Transparan, & Sneakers Putih";
+        resTeks.innerText = `Blazer berwarna ${txtWarna} tidak akan terlihat kaku jika bagian dalamnya dipadukan dengan kaos basic kasual serta sepatu canvas santai untuk look k-style modern.`;
+        resGambarAtasan.src = "assets/blazer-combo.png";
       } else {
-        // Fallback jika tipe tidak dipilih (hanya filter berdasarkan warna & bahan)
         resNama.innerText = `Gaya Padu Padan Eksperimen (${txtWarna})`;
-        resBawahan.innerText = `Celana Bahan Serat Alami warna ${dataWarnaAktif.matchTxt[0]}`;
-        resAksesoris.innerText =
-          "Sandal Aesthetic / Slip-on & Jam Tangan Casual";
+        resAksesoris.innerText = "Gunakan aksesori sederhana sesuai kenyamanan";
         resTeks.innerText = `Kombinasi bahan ${bahan} dengan warna dasar ${txtWarna} memancarkan impresi berpakaian yang matang dan aman untuk bepergian santai.`;
-        resGambar.src = "assets/kaos-combo.png";
+        resGambarAtasan.src = "assets/hero-clothes.jpg"; 
       }
+
+
+      // STEP C: LOGIKA TIPE CELANA (HANYA UNTUK MENGATUR TEKS BAWAHAN & GAMBAR CELANA)
+      let namaCelana = "";
+      
+      if (celanaTerpilih === "baggy_grey") namaCelana = "Celana Baggy Abu-abu";
+      else if (celanaTerpilih === "cargo_white") namaCelana = "Celana Cargo Putih";
+      else if (celanaTerpilih === "jeans_blue") namaCelana = "Jeans Biru Terang";
+      else if (celanaTerpilih === "kain_beige") namaCelana = "Celana Kain Krem (Beige)";
+      else if (celanaTerpilih === "jeans_black") namaCelana = "Jeans Hitam Longgar";
+      else if (celanaTerpilih === "slacks_grey") namaCelana = "Celana Bahan Abu-abu";
+      else if (celanaTerpilih === "cargo_green") namaCelana = "Celana Cargo Hijau Army";
+      else if (celanaTerpilih === "jeans_sobek") namaCelana = "Jeans Sobek (Ripped Jeans)";
+      else namaCelana = "Pilih bawahan warna netral";
+
+      resBawahan.innerText = namaCelana;
+      resGambarBawahan.src = databaseGambarCelana[celanaTerpilih] || "assets/celana-jeans-black.png";
 
       // Tampilkan Hasil & Efek Scroll Mulus
       hasilRekomendasiBox.classList.remove("d-none");
