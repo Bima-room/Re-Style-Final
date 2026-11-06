@@ -8,7 +8,7 @@
 
 /* ================= DESAIN HEADER / NAVBAR ================= */
 .navbar {
-  background-color: #c2e2b7; /* Warna hijau muda sesuai screenshot */
+  background-color: #1a4a2f; /* Warna hijau muda sesuai screenshot */
   display: flex;
   justify-content: space-between; /* Memisah logo di kiri, menu di kanan */
   align-items: center;
@@ -1812,5 +1812,67 @@ body.halaman-beranda .hero {
   .marquee-item {
     font-size: 13px;
     padding: 10px 18px;
+  }
+}
+
+/* Mengatur kotak agar bisa menumpuk teks dan GIF */
+#box-animasi {
+  padding: 0 !important; 
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 !important;
+  min-height: 0 !important; /* KUNCI 1: Mematikan sifat asli kotak yang suka memanjang */
+  height: 240px !important;
+}
+
+/* Mengatur teks agar melayang di atas atau di tengah GIF */
+.teks-atas-gif {
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(26, 74, 47, 0.85); 
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Mengunci GIF agar memenuhi kotak proporsional */
+.gif-fitur {
+  position: absolute !important; /* KUNCI 2: Melepas gambar agar tidak mendikte ukuran kotak */
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important; /* Memotong gambar yang kepanjangan tanpa membuatnya gepeng */
+  opacity: 0.7; 
+  transition: opacity 0.3s;
+}
+
+#box-animasi:hover .gif-fitur {
+  opacity: 1; /* GIF menjadi terang penuh saat disorot mouse */
+}
+
+@media (max-width: 768px) {
+  /* 1. Memunculkan kotaknya kembali tapi dengan ukuran yang lebih pendek */
+  #box-animasi {
+    display: flex !important;
+    height: 60px !important; /* Dibuat lebih pendek agar pas seperti tombol lainnya di HP */
+    min-height: 60px !important;
+  }
+
+  /* 2. HANYA menyembunyikan gambar GIF-nya saja agar HP tidak berat */
+  .gif-fitur {
+    display: none !important;
+  }
+
+  /* 3. Menghilangkan efek melayang pada teks agar kembali menjadi teks tombol biasa */
+  .teks-atas-gif {
+    position: static !important; 
+    background-color: transparent !important; 
+    padding: 0 !important;
+    font-size: 15px !important; /* Menyamakan ukuran dengan tombol lain di HP */
   }
 }
